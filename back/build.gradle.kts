@@ -30,12 +30,9 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.projectlombok:lombok")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.projectlombok:lombok")
-    // https://mvnrepository.com/artifact/org.bson/bson
-    implementation("org.bson:bson:2.6.5-no-key-checks-joda-gridfs-partial-save")
 
 }
 
