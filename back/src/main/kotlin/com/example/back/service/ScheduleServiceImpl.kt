@@ -6,10 +6,22 @@ import org.springframework.stereotype.Service
 
 @Service
 class ScheduleServiceImpl(
-    val shecduleRepository:ScheduleRepository
+    val scheduleRepository:ScheduleRepository
 ) : ScheduleService
 {
     override fun createShcedule(schedule: Schedule): Schedule {
-        return shecduleRepository.save(schedule);
+        return scheduleRepository.save(schedule);
+    }
+
+    override fun findScheduleByUserId(userId:String): List<Schedule> {
+        return scheduleRepository.findByUserId(userId)
+    }
+
+    override fun updateScheduleById(schedule: Schedule): Schedule {
+        if(scheduleRepository.existsScheduleById(schedule.id)){
+            return scheduleRepository.save(schedule)
+        }else{
+            return Schedule()
+        }
     }
 }
