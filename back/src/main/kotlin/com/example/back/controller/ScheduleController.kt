@@ -4,6 +4,7 @@ import com.example.back.dto.Schedule
 import com.example.back.service.ScheduleService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import org.bson.types.ObjectId
 import org.springframework.web.bind.annotation.*
 
 @Api(description = "일정관리")
@@ -25,8 +26,13 @@ class ScheduleController (
         return scheduleService.createShcedule(schedule)
     }
 
-    @PutMapping(path=["schedule"])
-    fun updateSchedule(@RequestBody schedule: Schedule):Schedule{
-        return scheduleService.updateScheduleById(schedule)
+    @PutMapping(path=["schedule/{id}"])
+    fun updateSchedule(@RequestBody schedule: Schedule,@PathVariable id:String):Schedule{
+        return scheduleService.updateScheduleById(schedule,ObjectId(id))
+    }
+
+    @DeleteMapping(path=["schedule/{id}"])
+    fun deleteSchedule(@RequestBody schedule: Schedule,@PathVariable id:String):Schedule{
+        return scheduleService.updateScheduleById(schedule,ObjectId(id))
     }
 }

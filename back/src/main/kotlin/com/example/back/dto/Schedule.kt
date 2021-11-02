@@ -12,7 +12,7 @@ import java.util.*
 @NoArgsConstructor
 data class Schedule(
     @Id
-    var id: ObjectId? =null,
+    var id: ObjectId? = ObjectId.get(),
     var userId: String? =null,
     var title: String? =null,
     var des: String? =null,

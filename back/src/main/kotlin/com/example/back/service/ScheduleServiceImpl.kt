@@ -2,6 +2,7 @@ package com.example.back.service
 
 import com.example.back.dto.Schedule
 import com.example.back.repository.ScheduleRepository
+import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,8 +18,9 @@ class ScheduleServiceImpl(
         return scheduleRepository.findByUserId(userId)
     }
 
-    override fun updateScheduleById(schedule: Schedule): Schedule {
-        if(scheduleRepository.existsScheduleById(schedule.id)){
+    override fun updateScheduleById(schedule: Schedule,id: ObjectId): Schedule {
+        if(scheduleRepository.existsScheduleById(id)){
+            schedule.id=id
             return scheduleRepository.save(schedule)
         }else{
             return Schedule()
