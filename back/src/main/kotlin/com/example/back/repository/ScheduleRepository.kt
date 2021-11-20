@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ScheduleRepository:MongoRepository<Schedule?,Long?> {
     fun findByUserId(userId:String): List<Schedule>
+    fun findByUserIdAndTitleLike(userId:String,title:String): List<Schedule>
     fun existsScheduleById(id: ObjectId?): Boolean
 }
