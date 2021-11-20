@@ -36,6 +36,19 @@ dependencies {
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
     implementation("io.springfox:springfox-swagger2:2.9.2")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    implementation("org.springframework.boot:spring-boot-starter-security:2.5.5")
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation("org.slf4j:slf4j-api:1.7.25")
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+    compileOnly("io.jsonwebtoken:jjwt-api:0.11.2")
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
+    implementation("com.auth0:java-jwt:3.18.2")
 }
 
 tasks.withType<KotlinCompile> {
