@@ -26,10 +26,11 @@ class JwtFilter(private val tokenProvider: TokenProvider) : OncePerRequestFilter
         val requestURI = httpServletRequest.requestURI
         if (StringUtils.hasText(jwt)) {
             val email = tokenProvider.getAuthentication(jwt)
-            val authToken=AuthToken(email)
+            val authToken=AuthToken(email,false)
             SecurityContextHolder.getContext().setAuthentication(authToken);
             Companion.logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, email: {}", email, requestURI)
         } else {
+            throw Exception()
             Companion.logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI)
         }
         filterChain.doFilter(httpServletRequest, response)

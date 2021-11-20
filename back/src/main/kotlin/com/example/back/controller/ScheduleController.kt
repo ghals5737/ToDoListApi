@@ -1,6 +1,8 @@
 package com.example.back.controller
 
 import com.example.back.dto.Schedule
+import com.example.back.dto.ScheduleReq
+import com.example.back.dto.ScheduleRes
 import com.example.back.service.ScheduleService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -16,13 +18,19 @@ class ScheduleController (
 {
     @ApiOperation(value = "유저 일정확인", notes = "유저 일정 확인 GET API")
     @GetMapping(path = ["schedule/{userid}"])
-    fun getSchedule(@PathVariable userid:String):List<Schedule>{
+    fun getSchedule(@PathVariable userid:String):List<ScheduleRes>{
+        return scheduleService.findScheduleByUserId(userid)
+    }
+
+    @ApiOperation(value = "유저 일정확인(제목)", notes = "유저 일정 확인 GET API")
+    @GetMapping(path = ["schedule/{userid}/{title}"])
+    fun getSchedule(@PathVariable userid:String,@PathVariable title:String):List<ScheduleRes>{
         return scheduleService.findScheduleByUserId(userid)
     }
 
     @ApiOperation(value = "유저 일정 생성", notes = "유저 일정 생성 POST API")
     @PostMapping(path = ["schedule"])
-    fun insertSchedule(@RequestBody schedule: Schedule):Schedule{
+    fun insertSchedule(@RequestBody schedule: ScheduleReq): ScheduleRes {
         return scheduleService.createShcedule(schedule)
     }
 

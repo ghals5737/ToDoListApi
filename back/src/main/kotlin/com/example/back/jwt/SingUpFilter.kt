@@ -2,7 +2,9 @@ package com.example.back.jwt
 
 import com.example.back.token.AuthToken
 import org.slf4j.LoggerFactory
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties
 import org.springframework.core.annotation.Order
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.GenericFilterBean
@@ -28,10 +30,11 @@ class SingUpFilter(private val tokenProvider: TokenProvider) : OncePerRequestFil
         val requestURI = httpServletRequest.requestURI
         if (StringUtils.hasText(jwt)) {
             val email = tokenProvider.getAuthentication(jwt)
-            val authToken=AuthToken(email)
+            val authToken=AuthToken(email,true)
             SecurityContextHolder.getContext().setAuthentication(authToken);
             Companion.logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, email: {}", email, requestURI)
         } else {
+            throw Exception()
             Companion.logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI)
         }
         filterChain.doFilter(httpServletRequest, response)

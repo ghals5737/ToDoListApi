@@ -5,8 +5,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 
 
-class AuthToken(private val principal: String) : AbstractAuthenticationToken(ArrayList<GrantedAuthority>()) {
-    private val credentials: Any? = "USER"
+class AuthToken(private val principal: String,private val credentials: Boolean?) : AbstractAuthenticationToken(ArrayList<GrantedAuthority>()) {
     override fun getCredentials(): Any? {
         return credentials
     }

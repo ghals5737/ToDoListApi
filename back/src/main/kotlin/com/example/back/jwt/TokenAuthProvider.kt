@@ -1,22 +1,38 @@
 package com.example.back.jwt
 
+import com.example.back.dto.User
+import com.example.back.service.UserService
 import com.example.back.token.AuthToken
+import org.bson.types.ObjectId
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
+import java.util.*
 
 
 @Component
-class TokenAuthProvider : AuthenticationProvider {
+class TokenAuthProvider(
+    val userService: UserService
+) : AuthenticationProvider {
     @Throws(AuthenticationException::class)
-    override fun authenticate(authentication: Authentication): Authentication {
-        // 해당 객체를 true 라고 하면 인증이 된다.
-        authentication.authorities
-        // 여기서 로직을 태워서 만약 인증이 아니라면 throw Authentication 을 던져주면 된다.
-        authentication.isAuthenticated=true
-        return authentication
+    override fun authenticate(authToken: Authentication): Authentication {
+        if(authToken.credentials as Boolean){
+            val user=User().apply{
+                this.id= ObjectId.getSmallestWithDate(Date())
+                this.userId=authToken.principal as String
+                this.regDt= Date()
+            }
+            userService.createUser(user)
+            authToken.isAuthenticated=true
+        }else{
+            if(!userService.existByUserId(authToken.principal as String)){
+                throw Exception()
+            }
+        }
+
+        return authToken
     }
 
     override fun supports(authentication: Class<*>?): Boolean {
