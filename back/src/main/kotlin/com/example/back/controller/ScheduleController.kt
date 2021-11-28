@@ -17,15 +17,16 @@ class ScheduleController (
 )
 {
     @ApiOperation(value = "유저 일정확인", notes = "유저 일정 확인 GET API")
-    @GetMapping(path = ["schedule/{userid}"])
-    fun getSchedule(@PathVariable userid:String):List<ScheduleRes>{
-        return scheduleService.findScheduleByUserId(userid)
+    @GetMapping(path = ["schedule"])
+    fun getSchedule(@RequestAttribute email:String ):List<ScheduleRes>{
+        println(email)
+        return scheduleService.findScheduleByUserId(email)
     }
 
     @ApiOperation(value = "유저 일정확인(제목)", notes = "유저 일정 확인 GET API")
-    @GetMapping(path = ["schedule/{userid}/{title}"])
-    fun getSchedule(@PathVariable userid:String,@PathVariable title:String):List<ScheduleRes>{
-        return scheduleService.findScheduleByUserId(userid)
+    @GetMapping(path = ["schedule/{title}"])
+    fun getSchedule(@RequestAttribute email:String,@PathVariable title:String):List<ScheduleRes>{
+        return scheduleService.findByUserIdAndTitleLike(email,title)
     }
 
     @ApiOperation(value = "유저 일정 생성", notes = "유저 일정 생성 POST API")
@@ -35,12 +36,12 @@ class ScheduleController (
     }
 
     @PutMapping(path=["schedule/{id}"])
-    fun updateSchedule(@RequestBody schedule: Schedule,@PathVariable id:String):Schedule{
+    fun updateSchedule(@RequestBody schedule: ScheduleReq,@PathVariable id:String):ScheduleRes{
         return scheduleService.updateScheduleById(schedule,ObjectId(id))
     }
 
     @DeleteMapping(path=["schedule/{id}"])
-    fun deleteSchedule(@RequestBody schedule: Schedule,@PathVariable id:String):Schedule{
-        return scheduleService.updateScheduleById(schedule,ObjectId(id))
+    fun deleteSchedule(@RequestBody schedule: ScheduleReq,@PathVariable id:String):ScheduleRes{
+        return scheduleService.deleteScheduleById(schedule,ObjectId(id))
     }
 }

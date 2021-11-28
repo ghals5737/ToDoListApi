@@ -8,6 +8,7 @@ import org.bson.types.ObjectId
 interface ScheduleService {
     fun createShcedule(scheduleReq: ScheduleReq): ScheduleRes
     fun findScheduleByUserId(userId:String):List<ScheduleRes>
-    fun updateScheduleById(schedule: Schedule,id:ObjectId):Schedule
+    fun updateScheduleById(schedule: ScheduleReq,id:ObjectId):ScheduleRes
     fun findByUserIdAndTitleLike(userId:String,title:String): List<ScheduleRes>
+    fun deleteScheduleById(schedule: ScheduleReq,id:ObjectId):ScheduleRes
 }

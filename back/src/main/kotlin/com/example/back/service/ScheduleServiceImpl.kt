@@ -18,6 +18,7 @@ class ScheduleServiceImpl(
             this.id= ObjectId.getSmallestWithDate(Date())
             this.userId=scheduleReq.userId
             this.title=scheduleReq.title
+            this.doneYn=scheduleReq.doneYn
             this.des=scheduleReq.des
             this.regDt= Date()
         }
@@ -26,6 +27,7 @@ class ScheduleServiceImpl(
             this.id=schedule.id.toString()
             this.userId=schedule.userId
             this.title=schedule.title
+            this.doneYn=schedule.doneYn
             this.des=schedule.des
             this.regDt=schedule.regDt
         }
@@ -40,6 +42,7 @@ class ScheduleServiceImpl(
                     this.id = it.id.toString()
                     this.userId=it.userId
                     this.title=it.title
+                    this.doneYn=it.doneYn
                     this.des=it.des
                     this.regDt=it.regDt
                 }
@@ -48,12 +51,28 @@ class ScheduleServiceImpl(
         return scheduleResList;
     }
 
-    override fun updateScheduleById(schedule: Schedule,id: ObjectId): Schedule {
+    override fun updateScheduleById(scheduleReq: ScheduleReq,id: ObjectId): ScheduleRes {
         if(scheduleRepository.existsScheduleById(id)){
-            schedule.id=id
-            return scheduleRepository.save(schedule)
+            var schedule=Schedule().apply {
+                this.id= id
+                this.userId=scheduleReq.userId
+                this.title=scheduleReq.title
+                this.doneYn=scheduleReq.doneYn
+                this.des=scheduleReq.des
+                this.regDt= Date()
+            }
+            schedule=scheduleRepository.save(schedule)
+            val scheduleRes=ScheduleRes().apply {
+                this.id=schedule.id.toString()
+                this.userId=schedule.userId
+                this.title=schedule.title
+                this.doneYn=schedule.doneYn
+                this.des=schedule.des
+                this.regDt=schedule.regDt
+            }
+            return scheduleRes
         }else{
-            return Schedule()
+            return ScheduleRes()
         }
     }
 
@@ -65,11 +84,33 @@ class ScheduleServiceImpl(
                     this.id = it.id.toString()
                     this.userId=it.userId
                     this.title=it.title
+                    this.doneYn=it.doneYn
                     this.des=it.des
                     this.regDt=it.regDt
                 }
             )
         }
         return scheduleResList;
+    }
+
+    override fun deleteScheduleById(scheduleReq: ScheduleReq, id: ObjectId): ScheduleRes {
+        var schedule=Schedule().apply {
+            this.id= id
+            this.userId=scheduleReq.userId
+            this.title=scheduleReq.title
+            this.doneYn=scheduleReq.doneYn
+            this.des=scheduleReq.des
+            this.regDt= Date()
+        }
+        scheduleRepository.delete(schedule)
+        val scheduleRes=ScheduleRes().apply {
+            this.id=schedule.id.toString()
+            this.userId=schedule.userId
+            this.title=schedule.title
+            this.doneYn=schedule.doneYn
+            this.des=schedule.des
+            this.regDt=schedule.regDt
+        }
+        return scheduleRes
     }
 }

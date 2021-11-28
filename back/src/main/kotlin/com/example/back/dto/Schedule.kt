@@ -13,6 +13,7 @@ data class Schedule(
     var id: ObjectId? = ObjectId.get(),
     var userId: String? =null,
     var title: String? =null,
+    var doneYn: Boolean?= false,
     var des: String? =null,
     var regDt: Date?=null
 )
@@ -21,6 +22,7 @@ data class ScheduleReq(
     var userId: String? =null,
     var title: String? =null,
     var des: String? =null,
+    var doneYn: Boolean?= false,
 )
 
 data class ScheduleRes(
@@ -28,6 +30,7 @@ data class ScheduleRes(
     var userId: String? =null,
     var title: String? =null,
     var des: String? =null,
+    var doneYn: Boolean?= false,
     var regDt: Date?=null
 )
 
