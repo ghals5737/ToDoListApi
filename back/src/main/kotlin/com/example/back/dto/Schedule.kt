@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
-@Document(collection = "shcedule")
+@Document(collection = "schedule")
 data class Schedule(
     @Id
     var id: ObjectId? = ObjectId.get(),

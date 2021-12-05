@@ -10,7 +10,7 @@ class AuthToken(private val principal: String,private val credentials: Boolean?)
         return credentials
     }
 
-    override fun getPrincipal(): Any {
+    override fun getPrincipal(): Any? {
         return principal
     }
 

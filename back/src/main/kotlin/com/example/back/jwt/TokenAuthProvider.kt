@@ -18,16 +18,20 @@ class TokenAuthProvider(
 ) : AuthenticationProvider {
     @Throws(AuthenticationException::class)
     override fun authenticate(authToken: Authentication): Authentication {
+        var userId=authToken.principal as String
+        userId=userId.substring(1,userId.length-1)
         if(authToken.credentials as Boolean){
-            val user=User().apply{
-                this.id= ObjectId.getSmallestWithDate(Date())
-                this.userId=authToken.principal as String
-                this.regDt= Date()
+            if(!userService.existByUserId(userId)){
+                val user=User().apply{
+                    this.id= ObjectId.getSmallestWithDate(Date())
+                    this.userId= userId
+                    this.regDt= Date()
+                }
+                userService.createUser(user)
+                authToken.isAuthenticated=true
             }
-            userService.createUser(user)
-            authToken.isAuthenticated=true
         }else{
-            if(!userService.existByUserId(authToken.principal as String)){
+            if(!userService.existByUserId(userId)){
                 throw Exception()
             }
         }
