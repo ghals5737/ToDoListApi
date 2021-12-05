@@ -28,7 +28,7 @@ class JwtFilter(private val tokenProvider: TokenProvider) : OncePerRequestFilter
             val email = tokenProvider.getAuthentication(jwt)
             val authToken=AuthToken(email,false)
             SecurityContextHolder.getContext().setAuthentication(authToken);
-            httpServletRequest.setAttribute("email",email)
+            httpServletRequest.setAttribute("email",email.substring(1,email.length-1))
             Companion.logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, email: {}", email, requestURI)
         } else {
             throw Exception()

@@ -34,3 +34,25 @@ data class ScheduleRes(
     var regDt: Date?=null
 )
 
+fun scheduleReqToSchedule(scheduleReq: ScheduleReq):Schedule{
+    return Schedule().apply {
+        this.id= ObjectId.getSmallestWithDate(Date())
+        this.userId=scheduleReq.userId
+        this.title=scheduleReq.title
+        this.doneYn=scheduleReq.doneYn
+        this.des=scheduleReq.des
+        this.regDt= Date()
+    }
+}
+
+fun scheduleToScheduleRes(schedule: Schedule):ScheduleRes{
+    return ScheduleRes().apply {
+        this.id=schedule.id.toString()
+        this.userId=schedule.userId
+        this.title=schedule.title
+        this.doneYn=schedule.doneYn
+        this.des=schedule.des
+        this.regDt=schedule.regDt
+    }
+}
+
