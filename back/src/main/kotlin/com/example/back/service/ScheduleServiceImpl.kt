@@ -1,8 +1,6 @@
 package com.example.back.service
 
-import com.example.back.dto.Schedule
-import com.example.back.dto.ScheduleReq
-import com.example.back.dto.ScheduleRes
+import com.example.back.dto.*
 import com.example.back.repository.ScheduleRepository
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
@@ -14,46 +12,26 @@ class ScheduleServiceImpl(
 ) : ScheduleService
 {
     override fun createShcedule(scheduleReq: ScheduleReq): ScheduleRes {
-        var schedule=Schedule().apply {
-            this.id= ObjectId.getSmallestWithDate(Date())
-            this.userId=scheduleReq.userId
-            this.title=scheduleReq.title
-            this.des=scheduleReq.des
-            this.regDt= Date()
-        }
-        schedule=scheduleRepository.save(schedule)
-        val scheduleRes=ScheduleRes().apply {
-            this.id=schedule.id.toString()
-            this.userId=schedule.userId
-            this.title=schedule.title
-            this.des=schedule.des
-            this.regDt=schedule.regDt
-        }
-        return scheduleRes;
+        var schedule=scheduleRepository.save(scheduleReqToSchedule(scheduleReq))
+        return scheduleToScheduleRes(schedule);
     }
 
     override fun findScheduleByUserId(userId:String): List<ScheduleRes> {
         val scheduleResList= mutableListOf<ScheduleRes>();
         scheduleRepository.findByUserId(userId).forEach{
             scheduleResList.add(
-                ScheduleRes().apply {
-                    this.id = it.id.toString()
-                    this.userId=it.userId
-                    this.title=it.title
-                    this.des=it.des
-                    this.regDt=it.regDt
-                }
+                scheduleToScheduleRes(it)
             )
         }
         return scheduleResList;
     }
 
-    override fun updateScheduleById(schedule: Schedule,id: ObjectId): Schedule {
+    override fun updateScheduleById(scheduleReq: ScheduleReq,id: ObjectId): ScheduleRes {
         if(scheduleRepository.existsScheduleById(id)){
-            schedule.id=id
-            return scheduleRepository.save(schedule)
+            var schedule=scheduleRepository.save(scheduleReqToSchedule(scheduleReq))
+            return scheduleToScheduleRes(schedule);
         }else{
-            return Schedule()
+            return ScheduleRes()
         }
     }
 
@@ -61,15 +39,15 @@ class ScheduleServiceImpl(
         val scheduleResList= mutableListOf<ScheduleRes>();
         scheduleRepository.findByUserIdAndTitleLike(userId,title).forEach{
             scheduleResList.add(
-                ScheduleRes().apply {
-                    this.id = it.id.toString()
-                    this.userId=it.userId
-                    this.title=it.title
-                    this.des=it.des
-                    this.regDt=it.regDt
-                }
+                scheduleToScheduleRes(it)
             )
         }
         return scheduleResList;
+    }
+
+    override fun deleteScheduleById(scheduleReq: ScheduleReq, id: ObjectId): ScheduleRes {
+        var schedule= scheduleReqToSchedule(scheduleReq)
+        scheduleRepository.delete(schedule)
+        return scheduleToScheduleRes(schedule);
     }
 }

@@ -18,6 +18,6 @@ class UserController(
     @ApiOperation(value = "유저 회원가입", notes = "유저 회원가입 GET API")
     @GetMapping(path = ["user"])
     fun getSchedule():String{
-        return "SUCCESSS"
+        return "SUCCESS"
     }
 }
