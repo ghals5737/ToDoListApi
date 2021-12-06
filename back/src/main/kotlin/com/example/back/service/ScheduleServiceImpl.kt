@@ -11,7 +11,7 @@ class ScheduleServiceImpl(
     val scheduleRepository:ScheduleRepository
 ) : ScheduleService
 {
-    override fun createShcedule(scheduleReq: ScheduleReq): ScheduleRes {
+    override fun createSchedule(scheduleReq: ScheduleReq): ScheduleRes {
         var schedule=scheduleRepository.save(scheduleReqToSchedule(scheduleReq))
         return scheduleToScheduleRes(schedule);
     }
