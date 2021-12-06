@@ -31,8 +31,9 @@ class ScheduleController (
 
     @ApiOperation(value = "유저 일정 생성", notes = "유저 일정 생성 POST API")
     @PostMapping(path = ["schedule"])
-    fun insertSchedule(@RequestBody schedule: ScheduleReq): ScheduleRes {
-        return scheduleService.createShcedule(schedule)
+    fun insertSchedule(@RequestBody schedule: ScheduleReq,@RequestAttribute email:String): ScheduleRes {
+        schedule.userId=email
+        return scheduleService.createSchedule(schedule)
     }
 
     @PutMapping(path=["schedule/{id}"])
