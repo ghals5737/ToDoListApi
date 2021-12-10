@@ -28,8 +28,9 @@ class ScheduleServiceImpl(
 
     override fun updateScheduleById(scheduleReq: ScheduleReq,id: ObjectId): ScheduleRes {
         if(scheduleRepository.existsScheduleById(id)){
-            var schedule=scheduleRepository.save(scheduleReqToSchedule(scheduleReq))
-            return scheduleToScheduleRes(schedule);
+            var schedule= scheduleReqToSchedule(scheduleReq)
+            schedule.id=id.toString();
+            return scheduleToScheduleRes(scheduleRepository.save(schedule));
         }else{
             return ScheduleRes()
         }
@@ -47,6 +48,7 @@ class ScheduleServiceImpl(
 
     override fun deleteScheduleById(scheduleReq: ScheduleReq, id: ObjectId): ScheduleRes {
         var schedule= scheduleReqToSchedule(scheduleReq)
+        schedule.id=id.toString();
         scheduleRepository.delete(schedule)
         return scheduleToScheduleRes(schedule);
     }
