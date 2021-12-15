@@ -34,11 +34,8 @@ class ScheduleRepositoryTest {
             this.des = "test_des"
             this.regDt = time
         }
-    }
 
-    @DisplayName("테스트 할 객체 MongoDB에 저장하면 결과값은 테스트 객체와 동일하게 나온다.")
-    @Test
-    fun saveTest() {
+        // 데이터 삽입도 딱 한번만 해야 문제가 없음
         val result = scheduleRepository.save(expected)
         assertEquals(expected, result)
     }
