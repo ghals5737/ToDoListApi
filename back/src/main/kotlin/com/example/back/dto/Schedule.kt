@@ -16,7 +16,29 @@ data class Schedule(
     var doneYn: Boolean?= false,
     var des: String? =null,
     var regDt: Date?=null
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Schedule
+
+        if (userId != other.userId) return false
+        if (title != other.title) return false
+        if (doneYn != other.doneYn) return false
+        if (des != other.des) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = userId?.hashCode() ?: 0
+        result = 31 * result + (title?.hashCode() ?: 0)
+        result = 31 * result + (doneYn?.hashCode() ?: 0)
+        result = 31 * result + (des?.hashCode() ?: 0)
+        return result
+    }
+}
 
 data class ScheduleReq(
     var userId: String? =null,
