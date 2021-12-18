@@ -44,10 +44,13 @@ class ScheduleServiceImpl(
         return scheduleResList
     }
 
-    override fun deleteScheduleById(scheduleReq: ScheduleReq, id: ObjectId): ScheduleRes {
-        val schedule = scheduleReqToSchedule(scheduleReq)
-        schedule.id = id
-        scheduleRepository.delete(schedule)
-        return scheduleToScheduleRes(schedule)
+    override fun deleteScheduleById(id: ObjectId): ScheduleRes {
+        return if (scheduleRepository.existsScheduleById(id)) {
+            val schedule = scheduleRepository.findById(id)
+            scheduleRepository.delete(schedule)
+            scheduleToScheduleRes(schedule)
+        } else {
+            ScheduleRes()
+        }
     }
 }

@@ -42,7 +42,7 @@ class ScheduleController (
     }
 
     @DeleteMapping(path=["schedule/{id}"])
-    fun deleteSchedule(@RequestBody schedule: ScheduleReq,@PathVariable id:String):ScheduleRes{
-        return scheduleService.deleteScheduleById(schedule,ObjectId(id))
+    fun deleteSchedule(@PathVariable id:String):ScheduleRes{
+        return scheduleService.deleteScheduleById(ObjectId(id))
     }
 }

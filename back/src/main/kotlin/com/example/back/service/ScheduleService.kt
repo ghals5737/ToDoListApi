@@ -9,5 +9,5 @@ interface ScheduleService {
     fun findScheduleByUserId(userId:String):List<ScheduleRes>
     fun updateScheduleById(scheduleReq: ScheduleReq,id:ObjectId):ScheduleRes
     fun findByUserIdAndTitleLike(userId:String,title:String): List<ScheduleRes>
-    fun deleteScheduleById(scheduleReq: ScheduleReq,id:ObjectId):ScheduleRes
+    fun deleteScheduleById(id:ObjectId):ScheduleRes
 }
